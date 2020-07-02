@@ -1,0 +1,97 @@
+
+*{
+    padding:0;
+    margin:0;
+    user-select:none;
+    /*box-sizing: border-box;*/
+}
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-image: linear-gradient(45deg,#9fbaa8,#31354c);
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+/*figure static start*/
+.skills{
+    width: 100%;
+    max-width:450px;
+    padding:20px 20px;
+    background: rgba(0,0,0,0.3);
+    box-shadow: 2px 2px 8px #31354c;
+}
+
+.skill-name{
+    font-size: 18px;
+    font-weight: 700;
+    margin:20px 0;
+}
+.skill-bar{
+    height:5px;
+    background:#cacaca;
+    border-radius: 8px;
+}
+.skill-per{
+    height: 5px;
+    background-color:greenyellow;
+    border-radius: 8px;
+    width:0;
+    transition:1.1s;
+    position: relative;
+}
+.skill-per::before{
+    content:attr(per);
+    position: absolute;
+    padding:4px 6px;
+    background-color: #000;
+    color:#fff;
+    font-size:12px;
+    border-radius: 4px;
+    top:-35px;
+    right:0;
+    /*元素沿着横轴移动自身长度的50%*/
+    transform: translateX(50%);
+}
+.skill-per::after{
+    content:'';
+    position: absolute;
+    background-color: #000;
+    width: 10px;
+    height: 10px;
+    top:-16px;
+    right:0;
+    transform: translateX(50%) rotate(45deg);
+}
+
+/*贝塞尔曲线图*/
+.lines{
+    display: flex;
+    justify-content: flex-start;
+    width: 800px;
+    padding-top: 20px;
+    background: rgba(0,0,0,0.3);
+    box-shadow: 2px 2px 8px #31354c;
+    margin-bottom: 100px;
+}
+.lines h4{
+    padding:4px 6px;
+    margin:0 10px 0 0;
+}
+.bcell{
+    stroke-dasharray:1000px ;
+    stroke-dashoffset:1000px;
+    transition:1.1s;
+
+}
+@keyframes changecell {
+    to{
+        stroke-dashoffset: 0px;
+    }
+}
+.figure{
+    display: flex;
+    flex-direction: column;
+}
