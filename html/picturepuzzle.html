@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拼图小游戏</title>
+    <script src="../js/utils.js"></script>
+    <script src="../js/jquery-3.4.1.js"></script>
+    <script src="../js/picturepuzzle.js"></script>
+    <link rel="stylesheet" href="../css/picturepuzzle.css">
+    <style>
+        .text{
+            position: absolute;
+            top:10%;
+            width: 300px;
+            height:100px;
+            font-weight:100;
+            font-size: 35px;
+            letter-spacing: 2px;
+            color:rgba(18,35,60,1);
+            /*text-shadow: 0 0 6px 3px rgba(255,255,255,0.7);*/
+        }
+        .text::before{
+            content:attr(data-text);
+            text-shadow: 1px 0 rgba(47,71,79,1);
+            position: absolute;
+            top:0;
+            left:-2px;
+            /*使用的为矩形蒙板形状，空格隔开的四个值为上右下左四个边到盒模型四周边缘的距离*/
+          clip-path: inset(5px 0 12px 0);
+            animation: ani1 2s infinite linear alternate-reverse;
+        }
+        .text::after{
+            content:attr(data-text);
+            text-shadow: -1px 0 rgba(159,188,198,1);
+            position: absolute;
+            /*background-image: linear-gradient(45deg,#9fbaa8,#31354c);*/
+            left:2px;
+            top:0;
+            /*使用的为矩形蒙板形状，空格隔开的四个值为上右下左四个边到盒模型四周边缘的距离*/
+             clip-path: inset(15px 0 43% 0);
+            animation: ani2 2s infinite linear;
+        }
+        @keyframes ani1 {
+            0%{
+                clip-path: inset(5px 0 12px 0);
+            }
+            10%{
+                clip-path: inset(20px 0 10px 0);
+            }
+            20%{
+                clip-path: inset(10x 0 23px 0);
+            }
+            30%{
+                clip-path: inset(5px 0 27px 0);
+            }
+            40%{
+                clip-path: inset(13px 0 44px 0);
+            }
+            50%{
+                clip-path: inset(25px 0 57px 0);
+            }
+            60%{
+                clip-path: inset(36px 0 12px 0);
+            }
+            70%{
+                clip-path: inset(14px 0 23px 0);
+            }
+            80%{
+                clip-path: inset(6px 0 32px 0);
+            }
+            90%{
+                clip-path: inset(16px 0 18px 0);
+            }
+            100%{
+                clip-path: inset(5px 0 12px 0);
+            }
+
+        }
+        @keyframes ani2 {
+            0%{
+                clip-path: inset(15px 0 23px 0);
+            }
+            10%{
+                clip-path: inset(10px 0 20px 0);
+            }
+            20%{
+                clip-path: inset(20px 0 12px 0);
+            }
+            30%{
+                clip-path: inset(25px 0 7px 0);
+            }
+            40%{
+                clip-path: inset(26px 0 12px 0);
+            }
+            50%{
+                clip-path: inset(34px 0 8px 0);
+            }
+            60%{
+                clip-path: inset(14px 0 27px 0);
+            }
+            70%{
+                clip-path: inset(18px 0 11px 0);
+            }
+            80%{
+                clip-path: inset(35px 0 4px 0);
+            }
+            90%{
+                clip-path: inset(19px 0 35px 0);
+            }
+            100%{
+                clip-path: inset(15px 0 23px 0);
+            }
+
+        }
+
+        .cover{
+            position: absolute;
+            right:10px;
+            top:20%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .btn{
+            width: 220px;
+            height: 50px;
+            /*background: #6a89cc;*/
+            background-image: linear-gradient( 110.3deg,   rgba(127,146,166,1) 20.8%,rgba(72,85,99,1) 75.1% );
+            margin:40px;
+            border:none;
+            outline: none;
+            color:#fff;
+            font-family: "monospace",sans-serif;
+            text-transform: uppercase;
+            font-size: 16px;
+            transition: 0.4s;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            transform: translateY(0) translateZ(50px);
+            cursor: pointer;
+
+            /*box-shadow: 0 0 6px 2px  rgba(159,188,198,0.9);*/
+        }
+        .btn::after{
+            content: "";
+            position:absolute;
+            /*background:#4a69bd;*/
+            background-image: linear-gradient( 110.3deg,  rgba(72,85,99,1) 20.8%,rgba(127,146,166,1)  75.1% );
+            transition: 0.4s;
+            transform: translateZ(50px);
+        }
+        .btn1:hover{
+            transform:translateY(-20px) rotateX(-40deg);
+        }
+        .btn1::after{
+            width: 100%;
+            height: 40px;
+            top:-40px;
+            left:0;
+            /*设置元素旋转的位点:x轴0%处，y轴100%处，即以左下角为顶点沿x轴转90度*/
+            /*注意坐标系:以元素左上角为原点建立坐标轴，向右x轴正向，向下y轴正向，从页面向外z轴正向*/
+            /*rotateX,rotateZ旋转正方向为顺时针，rotateY旋转正方向为逆时针*/
+            transform-origin: 0 100%;
+            transform: rotateX(90deg);
+        }
+
+        .btn2:hover{
+            transform: translateY(20px) rotateX(45deg);
+        }
+        .btn2::after{
+            width: 100%;
+            height: 40px;
+            top:100%;
+            left:0;
+            transform-origin: 0 0;
+            transform: rotateX(-90deg) ;
+        }
+
+        .btn3:hover{
+            /*右转*/
+            transform: rotateY(40deg) translateZ(70px);
+        }
+        .btn3::after{
+            width:30px;
+            height:50px;
+            top:0;
+            left:0;
+            transform-origin: 0 0;
+            transform: rotateY(90deg);
+        }
+
+        .btn4:hover{
+            /*左转*/
+            transform: rotateY(-40deg) translateZ(70px);
+        }
+        .btn4::after{
+            width:30px;
+            height:50px;
+            top:0;
+            right:-30px;
+            transform-origin: 0 0;
+            transform: rotateY(90deg);
+        }
+        .word{
+            position: absolute;
+            width: 100%;
+            height: 40px;
+            color:#31354cee;
+            letter-spacing: 1px;
+            font-family: sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            top:calc(50% - 20px);
+            text-align: center;
+        }
+        #success{
+            position: absolute;
+            bottom:10%;
+            top:92%;
+            left:50%;
+            transform: translate(-50%,-50%);
+            /*display: flex;*/
+            /*justify-content: center;*/
+            /*align-items: center;*/
+            width: 60px;
+            height:150px;
+        }
+        .input{
+            cursor: pointer;
+            top:50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+            width: 40px;
+            height: 40px;
+            background: none;
+            border-radius: 50%;
+            border:2px solid #fff;
+            box-sizing: border-box;
+            outline: none;
+            font-family: FZShuTi;
+            font-size: 18px;
+            font-weight: 300;
+            color:#fff;
+            transition: width 0.4s ease-in-out,
+            border-radius 0.8s ease-in-out,
+        padding 0.2s;
+        }
+        .btns{
+            opacity: 0;
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            top:20px;
+            left:10px;
+            box-sizing: border-box;
+            background: none;
+            border:none;
+            outline:none;
+            cursor: pointer;
+            transition:0.8s;
+        }
+        .btns::before{
+            content:"";
+            width:18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color:white;
+            position: absolute;
+            transform: rotate(-45deg);
+             top:4px;
+           right:-5px;
+            transition:0.8s ;
+        }
+        .inclicked{
+            width: 150px;
+            border-radius: 0;
+            top:10px;
+            position: absolute;
+        }
+        .close{
+            position: absolute;
+            left:90px;
+            top:0;
+            opacity: 1;
+
+        }
+      .close::after{
+            content:"\266A";
+            width: 4px;
+            height: 34px;
+           color:#000;
+            /*background: white;*/
+            position: absolute;
+          font-weight: 100;
+         font-size: 18px;
+           top:5px;
+            right:2px;
+        }
+
+        #main span{
+            position: absolute;
+            top:0;
+            left:0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            box-sizing: border-box;
+        }
+        #main span::before{
+            content:'';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #31354cae;
+            animation: animate 3s linear infinite;
+        }
+        #main span:nth-child(1){
+            transform: rotate(0deg);
+        }
+        #main span:nth-child(2){
+            transform: rotate(90deg);
+        }
+        #main span:nth-child(3){
+            transform: rotate(180deg);
+        }
+        #main span:nth-child(4){
+            transform: rotate(270deg);
+        }
+        #main span:nth-child(2)::before{
+            animation-delay: -2s;
+        }
+        #main span:nth-child(4)::before{
+            animation-delay: -2s;
+        }
+        @keyframes animate {
+            0%{
+                transform-origin: left;
+                transform:scaleX(0) ;
+            }
+            50%{
+                transform-origin: left;
+                transform:scaleX(1) ;
+            }
+            50.1%{
+                transform-origin: right;
+                transform:scaleX(1) ;
+            }
+            100%{
+                transform-origin: right;
+                transform:scaleX(0) ;
+            }
+        }
+
+       .right{
+           position: absolute;
+           bottom:10%;
+           top:88%;
+           left:50%;
+           transform: translate(-50%,-50%);
+           text-align: center;
+           width: 60px;
+           height: 60px;
+           display: none;
+       }
+        .wrong{
+            position: absolute;
+            bottom:10%;
+            top:88%;
+            left:50%;
+            transform: translate(-50%,-50%);
+            text-align: center;
+            width: 60px;
+            height: 60px;
+            display: none;
+        }
+        .answerwrong .checkleft{
+            animation: 0.8s show ease-in-out forwards;
+        }
+        .answerwrong .checkright{
+            animation: 0.8s show ease-in-out 0.8s forwards;
+
+        }
+        .checkmark{
+            stroke-dasharray:80px ;
+            stroke-dashoffset:80px;
+        }
+        .answerright .checkmark{
+            animation: 1.3s show ease-in-out forwards;
+        }
+        @keyframes show {
+            to{
+                stroke-dashoffset: 0;
+            }
+        }
+        #moveon{
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            right:95px;
+            bottom:15px;
+            text-align: center;
+        }
+        #moveon .nextbtn{
+            text-decoration:none;
+            font-weight: 700;
+            font-size: 40px;
+            line-height: 80px;
+            color:rgba(159,188,198,1);
+            cursor: pointer;
+        }
+        #moveon:hover .nextbtn{
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+<div class="text" data-text="PUZZLE·GAME">PUZZLE·GAME</div>
+<div id="main">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <ul id="begin">
+        <li ondrop="drop(event)" ondragover="dropOver(event)">
+            <img  draggable="true" class="drag" id="drag1" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
+        </li>
+        <li ondrop="drop(event)" ondragover="dropOver(event)">
+            <img   draggable="true" class="drag" id="drag2" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
+        </li>
+        <li ondrop="drop(event)" ondragover="dropOver(event)">
+            <img  draggable="true" class="drag" id="drag3" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
+        </li>
+        <li ondrop="drop(event)" ondragover="dropOver(event)">
+            <img  draggable="true" class="drag" id="drag4" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
+        </li>
+        <li ondrop="drop(event)" ondragover="dropOver(event)">
+            <img   draggable="true" class="drag" id="drag5" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
+        </li>
+        <li ondrop="drop(event)" ondragover="dropOver(event)">
+            <img  draggable="true" class="drag" id="drag6" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
+        </li>
+        <li ondrop="drop(event)" ondragover="dropOver(event)">
+            <img   draggable="true" class="drag" id="drag7" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
+        </li>
+        <li ondrop="drop(event)" ondragover="dropOver(event)">
+            <img   draggable="true" class="drag" id="drag8" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
+        </li>
+        <li ondrop="drop(event)" ondragover="dropOver(event)">
+            <img   draggable="true" class="drag" id="drag9" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
+        </li>
+    </ul>
+    <div class="word">Click button to show the puzzle</div>
+
+</div>
+<!--<div class="showanswer"></div>-->
+<div id="success">
+    <form action="picturepuzzle.html" class="search-box" method="post">
+        <input type="text" class="input" name="" placeholder="请输入音乐人/组合的名称">
+        <button type="button" class="btns" name="button" ></button>
+    </form>
+</div>
+<div class="right">
+<svg class="checkmark" width="60px" height="60px" stroke="url(#grad1)" fill="none" stroke-width="4"  stroke-linejoin="round">
+    <defs>
+        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:rgb(72,85,99);stop-opacity:1" />
+            <stop offset="100%" style="stop-color:rgba(47,71,79,1);stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    <polyline points='20,37 35,55 55,20'></polyline>
+</svg>
+</div>
+<!--background-image: radial-gradient( circle farthest-corner at 5.6% 54.5%,  rgba(47,71,79,1) 0%, rgba(159,188,198,1) 83.6% );-->
+<div class="wrong">
+    <svg class="checkmark" width="60px" height="60px"  stroke="url(#grad1)" stroke-width="4"  stroke-linejoin="round">
+        <defs>
+            <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:rgba(72,85,99,1);stop-opacity:1" />
+                <stop offset="100%" style="stop-color: rgba(47,71,79,1);stop-opacity:1"/>
+            </linearGradient>
+        </defs>
+        <line  x1="20" y1="20" x2="55" y2="55" class="checkleft" stroke-linecap="round" stroke="url(#grad2)"></line>
+        <line  x1="55" y1="20" x2="20" y2="55" class="checkright" stroke-linecap="round" stroke="url(#grad2)"></line>
+    </svg>
+</div>
+<div class="hint">
+    <div class="hintcontnet">
+    </div>
+</div>
+<div class="cover" >
+    <button class="btn btn1">Start Game</button>
+    <button class="btn btn2">Show Answer</button>
+    <button class="btn btn3">Hint Me</button>
+    <button class="btn btn4">Another Round</button>
+</div>
+
+<script>
+    var osuccess=document.getElementById('success');
+    var btn1=document.getElementsByClassName('btn1')[0];
+    var btn2=document.getElementsByClassName('btn2')[0];
+    var oword=document.getElementsByClassName('word')[0];
+    var obegin=document.getElementById("begin");
+    var btn4=document.getElementsByClassName('btn4')[0];
+    var btns=document.getElementsByClassName('btns')[0];
+    var checkmark=document.getElementsByClassName("checkmark")[0];
+    btn4.onclick=function () {
+        location.reload();
+    };
+    btn1.onclick=function () {
+        oword.style.display='none';
+        obegin.style.filter='blur(0)';
+    };
+    btn2.onclick=function () {
+        oword.style.display='none';
+        obegin.style.filter='blur(0)';
+        for(var i=0;i<9;i++){
+            pics[i].src="../images/celebrity"+nowfame+"/celebrity"+nowfame+"_0"+(i+1)+".png";
+        }
+        check();
+    }
+    var answer;
+    $('.input').on("click",function () {
+        $(".input").toggleClass('inclicked');
+        // $(".btns").css("opacity","1");
+        $(".btns").toggleClass('close');
+        // console.log(ifAnswerRight());
+    })
+
+$(".btns").on("click",function () {
+    startMove(osuccess,{opacity:0});
+    answer=ifAnswerRight();
+    console.log(answer);
+    if(answer=='right'){
+        $('.right').css('display','block');
+        $('.right').addClass('answerright');
+    }
+    else if(answer=='wrong'){
+        $('.wrong').css('display','block');
+        $('.wrong').addClass('answerwrong');
+    }
+    setTimeout(function () {
+        var omoveon=creates([{id:"moveon"}],document.body);
+        var movea=creates([{element:"a",class:"nextbtn"}],omoveon[0]);
+        var nextbtn=document.getElementsByClassName("nextbtn")[0];
+        nextbtn.innerHTML='&#10170';
+    },1000);
+})
+    init_pic();
+</script>
+</body>
+</html>

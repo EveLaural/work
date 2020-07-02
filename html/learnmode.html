@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ucenter</title>
+    <link rel="stylesheet" href="../css/learnmode.css">
+<!--    <script src="https://kit.fontawesome.com/a076d05399.js"></script>-->
+    <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .return{
+            position: absolute;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 45px;
+            top:50px;
+            left:25px;
+        }
+        .return a{
+            text-decoration: none;
+            color:#e2a10b;
+        }
+    </style>
+</head>
+<body>
+<div class="return"><a href="ucenter.html">&#8602</a></div>
+<div class="figure">
+<div class="lines" >
+    <h4>学习状态</h4>
+    <svg class="bcell" width="700px" height="350px" stroke="#538CED" fill="none" stroke-width="2" >
+        <path d="M2 10 L12 0 L22 10 Z" style="fill: #538CED"></path>
+        <polyline points="12,0 12,300 612,300" style="fill:none"></polyline>
+        <path d="M612 290 L622 300 L612 310 Z" style="fill: #538CED"></path>
+        <path   d="m21.5,229.10938c0,0 1.0883,-0.24762 7,2c7.11863,2.7065 12.894,6.48584 21,8c7.92518,1.48038 13.01363,1.32993 17,1c6.06203,
+        -0.50171 11.13881,-3.81116 18,-9c10.21423,-7.72461 20.75101,-18.34496 32,-32c11.82713,-14.35684 24.75259,-37.16994 31,-46c5.77573,
+        -8.16339 9.38687,-12.9176 12,-14c0.92387,-0.38269 3.134,-1.02667 7,0c7.79218,2.06932 23.65591,15.26869 36,27c15.89764,
+        15.10844 32.68372,35.53387 40,47c5.53806,8.67929 9.35577,15.76016 16,26c3.17389,4.89148 7.29361,10.7265 11,15c3.276,3.77728 5.87857,
+        5.49347 9,6c2.96127,0.48056 9.608,1.02737 22,-7c13.76538,-8.91705 28.66162,-21.49384 40,-37c21.28186,-29.10468 30.62177,-48.82242 43,
+        -68c5.423,-8.40186 9.54916,-14.95517 13,-16c0.95709,-0.28978 2.00754,-0.21266 5,0c7.05328,0.50127 19.46689,5.12744 35,14c17.58228,
+        10.04306 30.62549,21.78317 40,36c7.38562,11.20056 9.78735,19.74748 12,28c1.57526,5.87524 3,10 4,14c1,4 2,7 2,10l0,0l0,16"
+                style="fill:none;stroke:#ccc;stroke-width:2px;"></path>
+    </svg>
+</div>
+
+<div class="skills">
+    <div class="skill">
+        <div class="skill-name">学习进度</div>
+        <div class="skill-bar">
+            <div class="skill-per" per="40"></div>
+        </div>
+    </div>
+
+    <div class="skill">
+        <div class="skill-name">学习参与</div>
+        <div class="skill-bar">
+            <div class="skill-per" per="50"></div>
+        </div>
+    </div>
+
+    <div class="skill">
+        <div class="skill-name">讨论状态</div>
+        <div class="skill-bar">
+            <div class="skill-per" per="20"></div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+</body>
+<script>
+
+    $('.skill-per').each(function () {
+        var ithis=$(this);
+        var per=ithis.attr('per');
+        ithis.css('width',per+'%');
+    });
+    $('.bcell').css('animation','0.9s changecell forwards');
+
+</script>
+</html>

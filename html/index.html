@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/utils.js"></script>
+    <script type="text/javascript" src="../js/ThreeCanvas.js"></script>
+    <script type="text/javascript" src="../js/Snow.js"></script>
+    <script type="text/javascript" src="../js/snowmove.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        body{
+            /*background-color:#000044;*/
+            /*background:url(../images/bg.jpg) repeat-x;*/
+            background-image: linear-gradient(45deg,#9fbaa8,#31354c);
+            width: 100%;
+            height: 100%;
+            margin:0;
+            overflow:hidden;
+        }
+        a{
+            color:#0078ff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="show-login-btn"><i class="fas fa-sign-in-alt"></i>Show Login Form</div>
+
+<div class="login-box login">
+    <div class="login-hide-btn"><i class="far fa-window-close"></i></div>
+    <div class="container">
+    <div class="switch">
+        <span id="login">Login</span>
+        <span>/</span>
+        <span id="signup">Sign Up</span>
+    </div>
+    <form action="#" method="post">
+        <div id="email" class="input" placeholder="Email"><input type="text"></div>
+        <div class="input"  placeholder="Username"><input type="text" ></div>
+        <div class="input" placeholder="Password"><input type="password"></div>
+        <div id="repeat" class="input" placeholder="Repeat"><input type="password" ></div>
+        <span>Forget?</span>
+        <button class="loginbtn" type="button">
+            <p>LOGIN</p>
+            <div class="loading">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <svg class="checkmark" width="30px" height="30px" stroke="white" fill="none">
+                <polyline points='2,10 12,18 28,2'></polyline>
+            </svg>
+        </button>
+    </form>
+    </div>
+</div>
+<script type="text/javascript">
+    init();
+   $(".login-hide-btn").on("click",function () {
+        $(".login-box").toggleClass("showed");
+    });
+   $(".show-login-btn").on("click",function () {
+        $(".login-box").toggleClass("showed");
+    });
+
+   $("#login").click(function () {
+       /*点击变色逻辑start*/
+       $(".switch span").removeClass("active");
+       $(this).addClass("active");
+       /*点击变色逻辑 end*/
+
+       $(this).parents(".login-box").removeClass("signup");
+       $(this).parents(".login-box").addClass("login");
+       $("form button p").text("LOGIN");
+   });
+
+   $("#signup").click(function () {
+       $(".switch span").removeClass("active");
+       $(this).addClass("active");
+
+       $(this).parents('.login-box').removeClass("login");
+       $(this).parents(".login-box").addClass("signup");
+       $("form button p").text("SIGNUP");
+   });
+
+   $('.input input').on('focus',function () {
+       $(this).parent().addClass("focus");
+   });
+   $('.input input').on('blur',function () {
+       if($(this).val()==='')
+           $(this).parent().removeClass("focus");
+   });
+
+
+   $('.loginbtn').click(
+       function () {
+           $(this).toggleClass("activedot");
+           setTimeout(
+               ()=> {
+                   $(this).toggleClass("verity");
+               },2000
+           );
+           window.setTimeout("window.location='ucenter.html'",4000);
+       }
+   );
+
+</script>
+</body>
+
+
+
+</html>

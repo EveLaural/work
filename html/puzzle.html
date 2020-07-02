@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>puzzle</title>
+    <script src="../js/utils.js"></script>
+    <script src="../js/guide.js"></script>
+    <script src="../js/puzzle.js"></script>
+
+    <link rel="stylesheet" href="../css/guide.css">
+    <link rel="stylesheet" href="../css/puzzle.css">
+    <style>
+        .return{
+            position: absolute;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 45px;
+            top:50px;
+            left:25px;
+        }
+        .return a{
+            text-decoration: none;
+            color:#e2a10b;
+        }
+    </style>
+</head>
+<body>
+<div class="return"><a href="ucenter.html">&#8602</a></div>
+<script>
+    create_guide();
+    create_puzzle1();
+</script>
+
+<!--<svg>-->
+<!--    <filter id="wavy">-->
+<!--        <feTurbulence x="0" y="0" baseFrequency="0.02" numOctaves="5" seed="2">-->
+<!--            <animate attributeName="baseFrequency" dur="60s" values="0.02;0.05;0.02" repeatCount="indefinite"/>-->
+<!--        </feTurbulence>-->
+<!--        <feDisplacementMap in="SourceGraphic" scale="30" />-->
+<!--    </filter>-->
+<!--</svg>-->
+
+</body>
+</html>
